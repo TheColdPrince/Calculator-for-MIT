@@ -75,8 +75,7 @@
     PLEASE ROTATE YOUR DEVICE
 	</div>
 </body>
-<script>let historybutton = document.getElementById('historybutton');
-let history = document.getElementById('history');
+<script>
 let bar1 = document.getElementById('bar1');
 let bar2 = document.getElementById('bar2');
 
@@ -106,8 +105,6 @@ function showHistory() {
     }
     history.style.display = 'block';
 }
-
-historybutton.addEventListener('click', showHistory);
 
 function hide(){
     history.style.display = 'none';
@@ -181,7 +178,7 @@ document.addEventListener("keydown", function (event) {
     event.key <= 9 ||
     event.key == "+" ||
     event.key == "-" ||
-    event.key == "*" ||
+    event.key == "x" ||
     event.key == "." ||
     event.key == "/" ||
     event.key == "%" ||
