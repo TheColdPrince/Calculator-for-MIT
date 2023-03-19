@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1 user-scalable=no, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Simple Calculator</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
+
+	<!-- Common Tags -->
+    <meta content='#171825' name='theme-color' />
+
+    <!-- Search Engine -->
+    <meta property="description"
+        content="Simple Calculator" />
+	<link rel='icon' type='image/x-icon' href='favicon.png' />
+	<style>
+	.container,table{margin:auto}a,input{outline:0}#bar1,#bar2,#history,.container{position:absolute}#bar1,#bar2,#history,button{background-color:#fff}body,html{padding:0;margin:0;display:flex;justify-content:center;color:#ecf0f1;background-color:#080c3f;font-family:'Fjalla One',sans-serif;animation:1.5s fadein}@keyframes fadein{0%{opacity:0%}100%{opacity:100%}}h1{font-size:2.5rem;font-weight:500;margin-bottom:0}input{background-color:rgba(52,73,94,.5);color:#ecf0f1;text-align:right;border:none;font-size:3rem;width:78vw;margin-bottom:.5rem;border-radius:.5rem;padding:.5rem 1.5rem;-webkit-box-shadow:0 0 10px 0 rgba(0,0,0,.5);-moz-box-shadow:0 0 10px 0 rgba(0,0,0,.5);box-shadow:0 0 10px 0 rgba(0,0,0,.5)}.container{text-align:center;top:50%;left:50%;transform:translate(-50%,-50%)}.calculator{padding:.25rem;display:inline-block}button{border:none;width:20vw;height:10vh;padding:.5rem 0;margin:.25vmax;font-size:2rem;border-radius:.9375rem;-moz-transition:.5s;-webkit-transition:.5s;transition:.3s ease-in-out;-o-transition:.5s}a,button:hover{-moz-transition:.5s;-webkit-transition:.5s}button:active{transform:scale(.95);box-shadow:3px 2px 22px 1px rgba(0,0,0,.24)}button:hover{transform:scale(1);-webkit-box-shadow:0 0 10px 0 rgba(0,0,0,.5);-moz-box-shadow:0 0 10px 0 rgba(0,0,0,.5);box-shadow:0 0 10px 0 rgba(0,0,0,.5);transition:.5s;-o-transition:.5s}a{transition:.5s;-o-transition:.5s}a:hover{text-shadow:0 0 10px rgba(241,196,15,.5);-moz-transition:.5s;-webkit-transition:.5s;transition:.5s;-o-transition:.5s}#turn{display:none;z-index:100;position:fixed}#historybutton{width:40px;height:40px;border-radius:20px;float:right;margin-right:15px;cursor:pointer}#history{width:90%;height:80vh;top:10vh;border:2px solid #000;border-radius:10px;display:none}.historyelement{color:#000;margin:20px;font-size:40px}#bar1,#bar2{width:30px;height:4px;margin-top:20px;margin-right:20px;margin-left:93%;transform:rotate(45deg);cursor:pointer;display:none}#bar2{transform:rotate(135deg)}@media (orientation:landscape) and (max-height:500px){#turn{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;font-size:2rem;color:#34495e;background-color:#ecf0f1}}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1><a style="text-decoration: none; color: #f1c40f; margin-left: 0.25rem;" href="" onclick="location.reload();">JOMAR CALCULATOR</a><img id="historybutton" src="history.png"></h1 >
+		<div class="calculator">
+			<input type="text" name="screen" id="answer" readonly>
+			<table>
+				<tr>
+					<td><button>(</button></td>
+					<td><button>)</button></td>
+					<td><button style="background-color: #f01600; font-weight: bold; color: #ecf0f1;">C</button></td>
+					<td><button>%</button></td>
+				</tr>
+				<tr>
+					<td><button>7</button></td>
+					<td><button>8</button></td>
+					<td><button>9</button></td>
+					<td><button>X</button></td>
+				</tr>
+				<tr>
+					<td><button>4</button></td>
+					<td><button>5</button></td>
+					<td><button>6</button></td>
+					<td><button>-</button></td>
+				</tr>
+				<tr>
+					<td><button>1</button></td>
+					<td><button>2</button></td>
+					<td><button>3</button></td>
+					<td><button>+</button></td>
+				</tr>
+				<tr>
+					<td><button>0</button></td>
+					<td><button style="font-weight: bold;">.</button></td>
+					<td><button>/</button></td>
+					<td><button style="background-color: #25db72; font-weight: bold; color: #ecf0f1;">=</button></td>
+				</tr>
+			</table>
+			<hr style="max-width: 50vw;">
+			<div style="font-size:1rem; display: flex; align-items: center; justify-content: center;">Made with <img style="margin: 0.15rem;" src="heart.png">by<a style="text-decoration: none; color: #f1c40f; margin-left: 0.25rem;"
+                target="_blank" href="#">Jomar Balmores</a></div>
+		</div>
+	</div>
+	<div id="bar1" class = "bars"></div>
+	<div id="bar2" class = "bars"></div>
+	<div id="history">
+	</div>
+    <div id="turn">
+    PLEASE ROTATE YOUR DEVICE
+	</div>
+</body>
+<script>let historybutton = document.getElementById('historybutton');
+let history = document.getElementById('history');
+let bar1 = document.getElementById('bar1');
+let bar2 = document.getElementById('bar2');
+
+function showHistory() {
+    let calcHistory = JSON.parse(localStorage.getItem("calcHistory")) || [];
+    let len = calcHistory.length;
+
+    history.innerHTML = '';
+
+    bar1.style.display = 'block';
+    bar2.style.display = 'block';
+    if (len === 0) {
+        let historyItem = document.createElement('div');
+        historyItem.innerHTML = "There's no history yet.";
+        historyItem.className = 'historyelement his';
+        historyItem.style.fontSize = '30px';
+        history.appendChild(historyItem);
+    } else {
+        for (let index = len-1; index >=0; index--) {
+            const element = calcHistory[index];
+            let historyItem = document.createElement('div');
+            historyItem.className = 'historyelement';
+            historyItem.innerHTML = `${element.screenValue} =  ${element.result}`;
+            history.appendChild(historyItem);
+            if (index > 0) history.appendChild(document.createElement('hr'));
+        }
+    }
+    history.style.display = 'block';
+}
+
+historybutton.addEventListener('click', showHistory);
+
+function hide(){
+    history.style.display = 'none';
+    bar1.style.display = 'none';
+    bar2.style.display = 'none';
+}
+
+bar1.addEventListener('click', hide);
+bar2.addEventListener('click', hide);</script>
+<script>let flag = 0;
+function isNumber(char) {
+  return /^\d$/.test(char);
+}
+
+document.getElementById("answer").readOnly = true; //set this attribute in Html file
+let screen = document.getElementById("answer");
+buttons = document.querySelectorAll("button");
+let screenValue = "";
+let maxItems = 6;
+for (item of buttons) {
+  item.addEventListener("click", (e) => {
+    buttonText = e.target.innerText;
+    if (buttonText == "X") {
+      if (flag == 1) {
+        flag = 0;
+      }
+      buttonText = "*";
+      screenValue += buttonText;
+      screen.value = screenValue;
+    } else if (buttonText == "C") {
+      if (flag == 1) {
+        flag = 0;
+      }
+      screenValue = "";
+      screen.value = screenValue;
+    } else if (buttonText == "=") {
+      checkForBracketMulti(); // automatically evaluates if no brackets
+      //
+    } else if (isNumber(buttonText)) {
+      if (flag == 1) {
+        screenValue = buttonText;
+        flag = 0;
+      } else {
+        screenValue += buttonText;
+      }
+      screen.value = screenValue;
+      console.log("im an operator");
+    } else {
+      if (flag == 1) {
+        flag = 0;
+      }
+      screenValue = screen.value + buttonText;
+      screen.value = screenValue;
+    }
+  });
+}
+
+document.addEventListener("keydown", function (event) {
+  if (event.shiftKey == 57) {
+    event.key = "(";
+  } else if (event.shiftKey == 48) {
+    event.key = ")";
+  } else if (event.shiftKey == 53) {
+    event.key = "%";
+  }
+  if (event.keyCode == 88) {
+    screenValue += "*";
+    screen.value = screenValue;
+  }
+  if (
+    event.key <= 9 ||
+    event.key == "+" ||
+    event.key == "-" ||
+    event.key == "*" ||
+    event.key == "." ||
+    event.key == "/" ||
+    event.key == "%" ||
+    event.key == "(" ||
+    event.key == ")"
+  ) {
+    screenValue += event.key;
+    screen.value = screenValue;
+  }
+  if (event.keyCode == 13 || event.keyCode == 187) {
+    checkForBracketMulti(); // automatically evaluates if no brackets
+  } else if (event.keyCode == 46) {
+    screenValue = "";
+    screen.value = screenValue;
+    console.clear();
+  } else if (event.keyCode == 8) {
+    screenValue = screenValue.slice(0, -1);
+    screen.value = screenValue;
+  } else if (event.keyCode == 67) {
+    screenValue = "";
+    screen.value = screenValue;
+    console.clear();
+  } else if (event.keyCode == 82) {
+    location.reload();
+  }
+});
+
+window.onBracketMultiplication = function () {
+  screenValue = addStr(screen.value, screen.value.indexOf("("), "*");
+  screen.value = eval(screenValue);
+  let calcHistory = JSON.parse(localStorage.getItem("calcHistory")) || [];
+  if(calcHistory.length >= maxItems){
+      calcHistory.shift();
+  }
+  calcHistory.push({screenValue, result : screen.value});
+  localStorage.setItem("calcHistory", JSON.stringify(calcHistory));
+};
+
+function addStr(str, index, stringToAdd) {
+  return (
+    str.substring(0, index) + stringToAdd + str.substring(index, str.length)
+  );
+}
+
+function checkForBracketMulti() {
+  // Check if there's a number directly infront of a bracket
+  if (
+    screen.value.includes("(") &&
+    !isNaN(screen.value.charAt(screen.value.indexOf("(") - 1))
+  ) {
+    window.onBracketMultiplication();
+    return;
+  } else {
+    screen.value = eval(screenValue);
+    let calcHistory = JSON.parse(localStorage.getItem("calcHistory")) || [];
+    if(calcHistory.length >= maxItems){
+        calcHistory.shift();
+    }
+    calcHistory.push({screenValue, result : screen.value});
+    localStorage.setItem("calcHistory", JSON.stringify(calcHistory));
+  }
+  flag = 1;
+}</script>
+</html>
